@@ -1,13 +1,14 @@
 import "./App.css";
 import "./style.css";
 
-import addButtonIcon from "./assets/images/add-button.png";
 import categoryAsianIcon from "./assets/images/category-asian.png";
 import categoryChineseIcon from "./assets/images/category-chinese.png";
 import categoryEtcIcon from "./assets/images/category-etc.png";
 import categoryJapaneseIcon from "./assets/images/category-japanese.png";
 import categoryKoreanIcon from "./assets/images/category-korean.png";
 import categoryWesternIcon from "./assets/images/category-western.png";
+import Header from "./components/Header";
+import CategoryFilter from "./components/CategoryFilter";
 
 function App() {
   return (
@@ -18,44 +19,14 @@ function App() {
         <RestaurantList />
       </main>
       <aside>
-        {/* <RestaurantDetailModal /> */}
-        {/* <AddRestaurantModal /> */}
+        <RestaurantDetailModal />
+        <AddRestaurantModal />
       </aside>
     </>
   );
 }
 
-const Header = () => {
-  return (
-    <header className="gnb">
-      <h1 className="gnb__title text-title">점심 뭐 먹지</h1>
-      <button type="button" className="gnb__button" aria-label="음식점 추가">
-        <img src={addButtonIcon} alt="음식점 추가" />
-      </button>
-    </header>
-  );
-};
 
-const CategoryFilter = () => {
-  return (
-    <section className="restaurant-filter-container">
-      <select
-        name="category"
-        id="category-filter"
-        className="restaurant-filter"
-        aria-label="음식점 카테고리 필터"
-      >
-        <option value="전체">전체</option>
-        <option value="한식">한식</option>
-        <option value="중식">중식</option>
-        <option value="일식">일식</option>
-        <option value="양식">양식</option>
-        <option value="아시안">아시안</option>
-        <option value="기타">기타</option>
-      </select>
-    </section>
-  );
-};
 
 const RestaurantList = () => {
   return (
@@ -166,6 +137,85 @@ const RestaurantList = () => {
         </li>
       </ul>
     </section>
+  );
+};
+
+const RestaurantDetailModal = () => {
+  return (
+    <div className="modal modal--open">
+      <div className="modal-backdrop"></div>
+      <div className="modal-container">
+        <h2 className="modal-title text-title">음식점 이름</h2>
+        <div className="restaurant-info">
+          <p className="restaurant-info__description text-body">
+            음식점 소개 문구
+          </p>
+        </div>
+        <div className="button-container">
+          <button type="button" className="button button--primary text-caption">
+            닫기
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AddRestaurantModal = () => {
+  return (
+    <div className="modal modal--open">
+      <div className="modal-backdrop"></div>
+      <div className="modal-container">
+        <h2 className="modal-title text-title">새로운 음식점</h2>
+        <form>
+          <div className="form-item form-item--required">
+            <label htmlFor="category" className="text-caption">
+              카테고리
+            </label>
+            <select name="category" id="category" required>
+              <option value="">선택해 주세요</option>
+              <option value="한식">한식</option>
+              <option value="중식">중식</option>
+              <option value="일식">일식</option>
+              <option value="양식">양식</option>
+              <option value="아시안">아시안</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+
+          <div className="form-item form-item--required">
+            <label htmlFor="name" className="text-caption">
+              이름
+            </label>
+            <input type="text" name="name" id="name" required />
+          </div>
+
+          <div className="form-item">
+            <label htmlFor="description" className="text-caption">
+              설명
+            </label>
+            <textarea
+              name="description"
+              id="description"
+              cols={30}
+              rows={5}
+            ></textarea>
+            <span className="help-text text-caption">
+              메뉴 등 추가 정보를 입력해 주세요.
+            </span>
+          </div>
+
+          <div className="button-container">
+            <button
+              type="button"
+              className="button button--primary text-caption"
+            >
+              추가하기
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
