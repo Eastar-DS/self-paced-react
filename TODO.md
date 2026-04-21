@@ -16,12 +16,10 @@ Chapter 1 을 마치며 뒤로 미룬 항목 모음. 학습 흐름(리액트 핵
 
 ---
 
-## 2. "이게 TypeScript 였다면?" — Chapter 2 끝 1 분 미리보기
+## 2. ✅ "이게 TypeScript 였다면?" — Chapter 2 끝 1 분 미리보기 (완료 — 2026-04-21)
 
-- **무엇을:** Chapter 2 에서 처음으로 props 를 만들게 되는 시점에, 그 props 를 TS 로 쓰면 어떤 모양이 되는지 **전환하지 않고 감각만** 1 분 동안 맛본다. (예: `interface RestaurantProps { name: string; category: Category; }` 같은 식)
-- **언제:** Chapter 2 "리스트 렌더링" 의 마지막 작업 직후 — 본격 TS 전환은 Chapter 5 이후.
-- **왜 해두나:** 전면 전환 전에 "리액트의 무엇이 TS 와 맞닿는지" 를 미리 보면, 5 장 이후 전환이 리팩터링 감각으로 자연스럽게 이어진다.
-- **조건:** 이스타가 이미 타입 챌린지 10 번까지 풀이를 본 TS 기초가 있어 미리보기 1 분으로 충분.
+- **무엇을:** Chapter 2 에서 처음으로 props 를 만들게 되는 시점에, 그 props 를 TS 로 쓰면 어떤 모양이 되는지 **전환하지 않고 감각만** 1 분 동안 맛본다.
+- **결과:** `Category` 리터럴 유니온, `Restaurant` / `RestaurantListProps` / `CategoryFilterProps` 인터페이스, 핸들러 시그니처 형태까지 맛보기 완료. 본격 전환은 4 번 항목에서.
 
 ---
 
@@ -38,3 +36,13 @@ Chapter 1 을 마치며 뒤로 미룬 항목 모음. 학습 흐름(리액트 핵
 - **무엇을:** `.jsx` → `.tsx`, `tsconfig.json` 설정, `declarations.d.ts` 생성, props / 이벤트 / fetch 응답 타입 지정.
 - **언제:** Chapter 5 완료 직후.
 - **참고:** "우아한 타입스크립트 with 리액트" 8 장 내용을 프로젝트에 바로 적용.
+
+---
+
+## 5. Chapter 2 심화 — useReducer / 불변성
+
+- **무엇을:**
+  - `useReducer` — 복잡한 상태 변화를 action 단위로 관리. `useState` 여러 개가 서로 얽혀 변할 때 "상태 전이 규칙" 을 한 곳에 모으는 도구.
+  - 불변성(immutability) — 왜 배열/객체를 직접 `push`, `splice`, `obj.key = ...` 로 수정하면 React 가 변경을 감지하지 못하는지. 스프레드 연산자 / `map` / `filter` 로 "새 참조를 만들어서 교체" 하는 감각.
+- **언제:** Chapter 5 완료 후, 또는 Chapter 3~4 진행 중 상태 관리가 복잡해져 "아 이게 왜 필요하지" 가 체감되는 순간.
+- **왜 미뤘나:** 지금은 `useState` 하나로 충분한 단계. 고통이 먼저여야 reducer 의 효용이 체감된다.
