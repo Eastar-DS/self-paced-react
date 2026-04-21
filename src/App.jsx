@@ -6,6 +6,7 @@ import CategoryFilter from "./components/CategoryFilter";
 import RestaurantList from "./components/RestaurantList";
 import RestaurantDetailModal from "./components/RestaurantDetailModal";
 import AddRestaurantModal from "./components/AddRestaurantModal";
+import { useState } from "react";
 
 function App() {
   const restaurants = [
@@ -50,12 +51,19 @@ function App() {
     },
   ];
 
+  const [category, setCategory] = useState("전체");
+
+  const filteredRestaurants =
+    category === "전체"
+      ? restaurants
+      : restaurants.filter((restaurant) => restaurant.category === category);
+
   return (
     <>
       <Header />
       <main>
-        <CategoryFilter />
-        <RestaurantList restaurants={restaurants} />
+        <CategoryFilter onCategoryChange={setCategory} />
+        <RestaurantList restaurants={filteredRestaurants} />
       </main>
       <aside>
         <RestaurantDetailModal />
