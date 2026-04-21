@@ -14,13 +14,17 @@ const categoryIcons = {
   기타: categoryEtcIcon,
 };
 
-const RestaurantList = ({ restaurants }) => {
+const RestaurantList = ({ restaurants, onRestaurantClick }) => {
   return (
     <section className="restaurant-list-container">
       <ul className="restaurant-list">
         {restaurants.map((restaurant) => {
           return (
-            <li key={restaurant.id} className="restaurant">
+            <li
+              key={restaurant.id}
+              className="restaurant"
+              onClick={() => onRestaurantClick(restaurant)}
+            >
               <div className="restaurant__category">
                 <img
                   src={categoryIcons[restaurant.category]}

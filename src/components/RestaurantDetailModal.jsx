@@ -1,16 +1,20 @@
-const RestaurantDetailModal = () => {
+const RestaurantDetailModal = ({ restaurant, onClose }) => {
   return (
     <div className="modal modal--open">
-      <div className="modal-backdrop"></div>
+      <div className="modal-backdrop" onClick={onClose}></div>
       <div className="modal-container">
-        <h2 className="modal-title text-title">음식점 이름</h2>
+        <h2 className="modal-title text-title">{restaurant.name}</h2>
         <div className="restaurant-info">
           <p className="restaurant-info__description text-body">
-            음식점 소개 문구
+            {restaurant.description}
           </p>
         </div>
         <div className="button-container">
-          <button type="button" className="button button--primary text-caption">
+          <button
+            type="button"
+            className="button button--primary text-caption"
+            onClick={onClose}
+          >
             닫기
           </button>
         </div>
