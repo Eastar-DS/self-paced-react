@@ -1,6 +1,10 @@
 import addButtonIcon from "../assets/images/add-button.png";
 
-const Header = ({ onAddClick }) => {
+interface HeaderProps {
+  onAddClick:() => void;
+}
+
+const Header = ({ onAddClick }: HeaderProps) => {
   return (
     <header className="gnb">
       <h1 className="gnb__title text-title">점심 뭐 먹지</h1>

@@ -1,6 +1,12 @@
-const CategoryFilter = ({onCategoryChange}) => {
-  const handleFilterChange = (e) => {
-    onCategoryChange(e.target.value);
+import { FilterCategory } from "../types";
+
+interface CategoryFilterProps {
+  onCategoryChange: (value: FilterCategory) => void;
+}
+
+const CategoryFilter = ({ onCategoryChange }: CategoryFilterProps) => {
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onCategoryChange(e.target.value as FilterCategory);
   };
 
   return (

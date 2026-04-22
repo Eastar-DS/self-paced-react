@@ -7,9 +7,10 @@ import RestaurantList from "./components/RestaurantList";
 import RestaurantDetailModal from "./components/RestaurantDetailModal";
 import AddRestaurantModal from "./components/AddRestaurantModal";
 import { useState, useEffect } from "react";
+import { FilterCategory, Restaurant } from "./types";
 
 function App() {
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   const fetchRestaurants = async () => {
     const response = await fetch("http://localhost:3000/restaurants");
@@ -17,7 +18,7 @@ function App() {
     setRestaurants(data);
   };
 
-  const [category, setCategory] = useState("전체");
+  const [category, setCategory] = useState<FilterCategory>("전체");
 
   const filteredRestaurants =
     category === "전체"
