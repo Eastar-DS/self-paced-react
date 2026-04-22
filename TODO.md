@@ -82,3 +82,18 @@ Chapter 1 을 마치며 뒤로 미룬 항목 모음. 학습 흐름(리액트 핵
   - [ko.react.dev — Synchronizing with Effects](https://ko.react.dev/learn/synchronizing-with-effects) (cleanup 필요성 파트)
   - [MDN — AbortController](https://developer.mozilla.org/ko/docs/Web/API/AbortController)
   - [ko.react.dev — You Might Not Need an Effect](https://ko.react.dev/learn/you-might-not-need-an-effect) (애초에 effect 를 안 쓰는 길)
+
+---
+
+## 9. Chapter 5 심화 — 커스텀 훅 추출 / 로딩·에러 상태 / React Query 맛보기
+
+- **무엇을:**
+  - **커스텀 훅으로 fetch 로직 추출** — 지금 `App.jsx` 의 `fetchRestaurants` + `useEffect` + `handleAddRestaurant` 의 POST 후 재조회는 **"데이터 동기화 로직"** 과 **"UI 오케스트레이션"** 이 섞여 있다. 이걸 `const { restaurants, addRestaurant, refetch } = useRestaurants()` 형태로 빼면 `App` 은 순수하게 "어떤 UI 를 보여줄지" 만 남는다. 더 일반화해서 `useFetch(url)` 같은 범용 훅도 해볼 수 있음. 훅 이름이 `use-` 로 시작해야 하는 이유(React 규칙)도 같이.
+  - **로딩 / 에러 상태 처리 패턴** — 지금은 `loading`, `error` 를 생략한 상태(요구사항이 그랬음). 실무에선 필수. `isLoading` / `error` state 를 같이 관리해서 "로딩 스피너 → 데이터 or 에러 메시지" 의 3 가지 뷰를 전환하는 패턴. try/catch + finally, 또는 상태 머신(idle/loading/success/error) 으로 정리.
+  - **React Query (TanStack Query) 가 왜 등장했나** — 위 두 개(fetch 훅 추출 + loading/error)를 직접 구현하다 보면 공통 문제가 보인다: 캐싱, race condition, 포커스 시 자동 refetch, 여러 컴포넌트가 같은 데이터 공유, stale-while-revalidate. 직접 만들면 훅 하나로 안 끝남. 라이브러리가 이걸 패키지로 풀어준다. "직접 구현의 한계 체감 → 라이브러리 이해" 흐름이 핵심.
+- **언제:** 8번(cleanup / AbortController / race condition) 을 먼저 끝내고 바로 연결해서. 순서는 8 → 9.
+- **왜 미뤘나:** 본 과제의 요구사항이 명시적으로 "로딩/에러는 고려하지 않는다" 였고, 커스텀 훅 자체가 "중복을 느낀 후" 배워야 자연스러움. 지금은 훅 하나에 fetch 하나라서 추상화 동기가 약함. Ch4 심화(`useForm`) 와 연결해서 "로직과 UI 분리" 주제로 묶어서 보면 좋음.
+- **같이 볼 것:**
+  - [ko.react.dev — Reusing Logic with Custom Hooks](https://ko.react.dev/learn/reusing-logic-with-custom-hooks)
+  - [TanStack Query 공식 문서](https://tanstack.com/query/latest) — "Why React Query" 섹션부터 읽기
+  - [Kent C. Dodds — Stop using isLoading booleans](https://kentcdodds.com/blog/stop-using-isloading-booleans) — 상태 머신으로 정리하는 방식
