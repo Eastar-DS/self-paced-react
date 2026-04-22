@@ -34,6 +34,7 @@ Chapter 1 을 마치며 뒤로 미룬 항목 모음. 학습 흐름(리액트 핵
 ## 4. (2 번과 연결) 전체 TypeScript 전환
 
 - **무엇을:** `.jsx` → `.tsx`, `tsconfig.json` 설정, `declarations.d.ts` 생성, props / 이벤트 / fetch 응답 타입 지정.
+  - **폼 상태 타이핑** — `useState<string>("")`, `React.ChangeEvent<HTMLInputElement>`, `React.FormEvent<HTMLFormElement>`, 핸들러 시그니처. Ch4 에서 만든 `AddRestaurantModal` 의 controlled input 과 `handleSubmit` 부터 맛보기.
 - **언제:** Chapter 5 완료 직후.
 - **참고:** "우아한 타입스크립트 with 리액트" 8 장 내용을 프로젝트에 바로 적용.
 
@@ -56,3 +57,13 @@ Chapter 1 을 마치며 뒤로 미룬 항목 모음. 학습 흐름(리액트 핵
   - 접근성(a11y) — 모달에서 Tab 키가 모달 바깥으로 새나가지 않도록 **키보드 트랩** 구현, `role="dialog"` / `aria-modal` / `aria-labelledby` 속성, ESC 키로 닫기.
 - **언제:** Chapter 5 완료 후, 또는 실무에서 접근성 감각을 빨리 체득하고 싶을 때 Chapter 4 직후에 당겨 와도 OK.
 - **왜 미뤘나:** Chapter 3 의 핵심은 "state/이벤트/조건부 렌더링" 이라는 React 패턴. 접근성은 그 위에 얹히는 별도 주제이며, React 특유의 내용보다 DOM API 와 WAI-ARIA 사양 쪽에 가깝다.
+
+---
+
+## 7. Chapter 4 심화 — 재사용 컴포넌트 / 커스텀 훅
+
+- **무엇을:**
+  - **재사용 `<Modal>` + children props** — 지금 `RestaurantDetailModal` 과 `AddRestaurantModal` 은 "backdrop + container + close 로직" 껍데기가 똑같다. 이걸 `<Modal onClose={...}>{내용}</Modal>` 형태의 **단일 컴포넌트** 로 뽑고, 각 모달은 그 안에 내용만 넣는 구조로 리팩터링. `children` 이 "JSX 자체를 prop 으로 받는" 특별한 prop 이라는 감각을 체득.
+  - **커스텀 훅 `useForm`** — `AddRestaurantModal` 의 `useState` 3개 + `onChange` 3개를 `const { values, handleChange, reset } = useForm({ category: "", name: "", description: "" })` 형태의 훅으로 묶기. 컴포넌트가 "폼을 어떻게 관리하는가" 가 아니라 **"어떤 UI 를 보여주는가"** 에만 집중하게 만드는 첫 경험. 로직과 UI 의 분리.
+- **언제:** Chapter 5 완료 후, 또는 "두 모달의 중복이 눈에 거슬리기 시작" 하는 순간.
+- **왜 미뤘나:** 재사용과 훅 추출은 "중복을 느낀 후" 배워야 자연스럽다. Ch4 본 과제는 "폼의 기본기" 를 잡는 게 목적이라, 추상화는 학습 부담을 늘리기만 함.
