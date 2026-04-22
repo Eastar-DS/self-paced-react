@@ -1,15 +1,34 @@
-const AddRestaurantModal = () => {
+import { useState } from "react";
+
+const AddRestaurantModal = ({ onClose, onAddRestaurant }) => {
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (category === "" || name === "") return;
+    onAddRestaurant({ category, name, description });
+    onClose();
+  };
+
   return (
     <div className="modal modal--open">
-      <div className="modal-backdrop"></div>
+      <div className="modal-backdrop" onClick={onClose}></div>
       <div className="modal-container">
         <h2 className="modal-title text-title">새로운 음식점</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-item form-item--required">
             <label htmlFor="category" className="text-caption">
               카테고리
             </label>
-            <select name="category" id="category" required>
+            <select
+              name="category"
+              id="category"
+              required
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
               <option value="">선택해 주세요</option>
               <option value="한식">한식</option>
               <option value="중식">중식</option>
@@ -24,7 +43,14 @@ const AddRestaurantModal = () => {
             <label htmlFor="name" className="text-caption">
               이름
             </label>
-            <input type="text" name="name" id="name" required />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
 
           <div className="form-item">
@@ -36,6 +62,8 @@ const AddRestaurantModal = () => {
               id="description"
               cols={30}
               rows={5}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
             <span className="help-text text-caption">
               메뉴 등 추가 정보를 입력해 주세요.
@@ -44,7 +72,7 @@ const AddRestaurantModal = () => {
 
           <div className="button-container">
             <button
-              type="button"
+              type="submit"
               className="button button--primary text-caption"
             >
               추가하기

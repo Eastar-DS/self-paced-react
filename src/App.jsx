@@ -9,7 +9,7 @@ import AddRestaurantModal from "./components/AddRestaurantModal";
 import { useState } from "react";
 
 function App() {
-  const restaurants = [
+  const [restaurants, setRestaurants] = useState([
     {
       id: "a01",
       name: "피양콩할마니",
@@ -49,7 +49,7 @@ function App() {
       description: "멕시칸 캐주얼 그릴",
       category: "기타",
     },
-  ];
+  ]);
 
   const [category, setCategory] = useState("전체");
 
@@ -68,9 +68,30 @@ function App() {
     setSelectedRestaurant(restaurant);
   };
 
+  const [isAddRestaurantModalOpen, setIsAddRestaurantModalOpen] =
+    useState(false);
+
+  const handleCloseAddRestaurantModal = () => {
+    setIsAddRestaurantModalOpen(false);
+  };
+
+  const handleOpenAddRestaurantModal = () => {
+    setIsAddRestaurantModalOpen(true);
+  };
+
+  const handleAddRestaurant = (newRestaurant) => {
+    setRestaurants((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        ...newRestaurant,
+      },
+    ]);
+  };
+
   return (
     <>
-      <Header />
+      <Header onAddClick={handleOpenAddRestaurantModal} />
       <main>
         <CategoryFilter onCategoryChange={setCategory} />
         <RestaurantList
@@ -85,7 +106,12 @@ function App() {
             onClose={handleCloseRestaurantDetailModal}
           />
         )}
-        {false && <AddRestaurantModal />}
+        {isAddRestaurantModalOpen && (
+          <AddRestaurantModal
+            onClose={handleCloseAddRestaurantModal}
+            onAddRestaurant={handleAddRestaurant}
+          />
+        )}
       </aside>
     </>
   );
