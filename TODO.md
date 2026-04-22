@@ -67,3 +67,18 @@ Chapter 1 을 마치며 뒤로 미룬 항목 모음. 학습 흐름(리액트 핵
   - **커스텀 훅 `useForm`** — `AddRestaurantModal` 의 `useState` 3개 + `onChange` 3개를 `const { values, handleChange, reset } = useForm({ category: "", name: "", description: "" })` 형태의 훅으로 묶기. 컴포넌트가 "폼을 어떻게 관리하는가" 가 아니라 **"어떤 UI 를 보여주는가"** 에만 집중하게 만드는 첫 경험. 로직과 UI 의 분리.
 - **언제:** Chapter 5 완료 후, 또는 "두 모달의 중복이 눈에 거슬리기 시작" 하는 순간.
 - **왜 미뤘나:** 재사용과 훅 추출은 "중복을 느낀 후" 배워야 자연스럽다. Ch4 본 과제는 "폼의 기본기" 를 잡는 게 목적이라, 추상화는 학습 부담을 늘리기만 함.
+
+---
+
+## 8. Chapter 5 심화 — Effect cleanup / AbortController / race condition
+
+- **무엇을:**
+  - **Effect cleanup** — `useEffect` 가 반환하는 함수. 컴포넌트가 unmount 되거나 effect 가 다시 실행되기 직전에 호출된다. "이 effect 가 시작한 일을 정리한다" 는 개념. 구독 해제(`subscribe` → `unsubscribe`), 타이머 해제(`setInterval` → `clearInterval`), 진행 중인 요청 취소 등.
+  - **`AbortController`** — 브라우저 표준 API. `fetch` 에 `signal` 을 넘겨두면 `controller.abort()` 호출로 요청을 중간에 끊을 수 있다. `useEffect` cleanup 안에서 이걸 호출하는 패턴이 fetch 의 race condition 방어책.
+  - **race condition** — 여러 동시 작업의 결과가 완료 순서(= race)에 의존하고 그 순서가 보장되지 않을 때 발생하는 결함. "뭐가 반영될지 타이밍에 달려 있다" 는 사실 자체가 버그의 본질. 검색창에서 "A" → "AB" 로 빠르게 바꿨을 때, 느린 A 응답이 빠른 AB 응답을 덮어써서 사용자는 "AB" 를 치고 있는데 화면엔 A 결과가 남는 식. 해결: cleanup 에서 이전 요청 abort, 또는 응답 식별자 확인 후 반영, 또는 React Query 같은 라이브러리.
+- **언제:** Chapter 5 본 과제 완료 후. 또는 실제로 "검색창 같은 빠른 입력 + fetch" 기능을 만들 때.
+- **왜 미뤘나:** Ch5 본 과제(마운트 1 회 로드 + 수동 트리거 POST + 재조회)는 같은 요청이 빠르게 연달아 일어날 일이 없어서 race 가 터지지 않는다. 고통 없이 AbortController 를 배우면 "왜 이게 필요한지" 가 안 와닿는다. Ch5 를 끝내고 React Query 맛보기로 넘어가기 전, "직접 구현의 한계" 를 체감하는 구간에서 배우는 게 자연스럽다.
+- **같이 볼 것:**
+  - [ko.react.dev — Synchronizing with Effects](https://ko.react.dev/learn/synchronizing-with-effects) (cleanup 필요성 파트)
+  - [MDN — AbortController](https://developer.mozilla.org/ko/docs/Web/API/AbortController)
+  - [ko.react.dev — You Might Not Need an Effect](https://ko.react.dev/learn/you-might-not-need-an-effect) (애초에 effect 를 안 쓰는 길)
