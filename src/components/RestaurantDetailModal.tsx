@@ -1,4 +1,14 @@
-const RestaurantDetailModal = ({ restaurant, onClose }) => {
+import { Restaurant } from "../types";
+
+interface RestaurantDetailModalProps {
+  restaurant: Restaurant;
+  onClose: () => void;
+}
+
+const RestaurantDetailModal = ({
+  restaurant,
+  onClose,
+}: RestaurantDetailModalProps) => {
   return (
     <div className="modal modal--open">
       <div className="modal-backdrop" onClick={onClose}></div>

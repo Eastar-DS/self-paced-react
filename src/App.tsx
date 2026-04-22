@@ -25,13 +25,14 @@ function App() {
       ? restaurants
       : restaurants.filter((restaurant) => restaurant.category === category);
 
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [selectedRestaurant, setSelectedRestaurant] =
+    useState<Restaurant | null>(null);
 
   const handleCloseRestaurantDetailModal = () => {
     setSelectedRestaurant(null);
   };
 
-  const handleOpenRestaurantDetailModal = (restaurant) => {
+  const handleOpenRestaurantDetailModal = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
   };
 
@@ -46,7 +47,7 @@ function App() {
     setIsAddRestaurantModalOpen(true);
   };
 
-  const handleAddRestaurant = async (newRestaurant) => {
+  const handleAddRestaurant = async (newRestaurant: Omit<Restaurant, "id">) => {
     await fetch("http://localhost:3000/restaurants", {
       method: "POST",
       headers: {

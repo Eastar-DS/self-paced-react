@@ -4,8 +4,9 @@ import categoryEtcIcon from "../assets/images/category-etc.png";
 import categoryJapaneseIcon from "../assets/images/category-japanese.png";
 import categoryKoreanIcon from "../assets/images/category-korean.png";
 import categoryWesternIcon from "../assets/images/category-western.png";
+import { Restaurant, RestaurantCategory } from "../types";
 
-const categoryIcons = {
+const categoryIcons: Record<RestaurantCategory, string> = {
   한식: categoryKoreanIcon,
   중식: categoryChineseIcon,
   일식: categoryJapaneseIcon,
@@ -14,7 +15,15 @@ const categoryIcons = {
   기타: categoryEtcIcon,
 };
 
-const RestaurantList = ({ restaurants, onRestaurantClick }) => {
+interface RestaurantListProps {
+  restaurants: Restaurant[];
+  onRestaurantClick: (restaurant: Restaurant) => void;
+}
+
+const RestaurantList = ({
+  restaurants,
+  onRestaurantClick,
+}: RestaurantListProps) => {
   return (
     <section className="restaurant-list-container">
       <ul className="restaurant-list">

@@ -1,11 +1,20 @@
 import { useState } from "react";
+import { Restaurant, RestaurantCategory } from "../types";
 
-const AddRestaurantModal = ({ onClose, onAddRestaurant }) => {
-  const [category, setCategory] = useState("");
+interface AddRestaurantModalProps {
+  onClose: () => void;
+  onAddRestaurant: (newRestaurant: Omit<Restaurant, "id">) => void;
+}
+
+const AddRestaurantModal = ({
+  onClose,
+  onAddRestaurant,
+}: AddRestaurantModalProps) => {
+  const [category, setCategory] = useState<RestaurantCategory | "">("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (category === "" || name === "") return;
     onAddRestaurant({ category, name, description });
@@ -27,7 +36,7 @@ const AddRestaurantModal = ({ onClose, onAddRestaurant }) => {
               id="category"
               required
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setCategory(e.target.value as typeof category)}
             >
               <option value="">선택해 주세요</option>
               <option value="한식">한식</option>
