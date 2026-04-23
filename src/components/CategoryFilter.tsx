@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { FilterCategory } from "../types";
 
 interface CategoryFilterProps {
@@ -5,7 +6,7 @@ interface CategoryFilterProps {
 }
 
 const CategoryFilter = ({ onCategoryChange }: CategoryFilterProps) => {
-  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     onCategoryChange(e.target.value as FilterCategory);
   };
 

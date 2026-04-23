@@ -59,6 +59,12 @@
       "name": "t4",
       "description": "t4",
       "id": "R5kkP1V1CGo"
+    },
+    {
+      "category": "한식",
+      "name": "tt1",
+      "description": "tt1",
+      "id": "bmRJrumq1bI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
