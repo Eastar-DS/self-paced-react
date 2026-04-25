@@ -1,6 +1,7 @@
-import { FormEvent, useState } from "react";
-import { Restaurant, RestaurantCategory } from "../types";
+import { FormEvent } from "react";
+import { isRestaurantCategory, Restaurant } from "../types";
 import Modal from "./Modal";
+import { useForm } from "../hooks/useForm";
 
 interface AddRestaurantModalProps {
   onClose: () => void;
@@ -11,14 +12,20 @@ const AddRestaurantModal = ({
   onClose,
   onAddRestaurant,
 }: AddRestaurantModalProps) => {
-  const [category, setCategory] = useState<RestaurantCategory | "">("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const { values, handleChange } = useForm({
+    category: "",
+    name: "",
+    description: "",
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (category === "" || name === "") return;
-    onAddRestaurant({ category, name, description });
+    if (!isRestaurantCategory(values.category) || values.name === "") return;
+    onAddRestaurant({
+      category: values.category,
+      name: values.name,
+      description: values.description,
+    });
     onClose();
   };
 
@@ -34,8 +41,8 @@ const AddRestaurantModal = ({
             name="category"
             id="category"
             required
-            value={category}
-            onChange={(e) => setCategory(e.target.value as typeof category)}
+            value={values.category}
+            onChange={handleChange}
           >
             <option value="">선택해 주세요</option>
             <option value="한식">한식</option>
@@ -56,8 +63,8 @@ const AddRestaurantModal = ({
             name="name"
             id="name"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={values.name}
+            onChange={handleChange}
           />
         </div>
 
@@ -70,8 +77,8 @@ const AddRestaurantModal = ({
             id="description"
             cols={30}
             rows={5}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={values.description}
+            onChange={handleChange}
           ></textarea>
           <span className="help-text text-caption">
             메뉴 등 추가 정보를 입력해 주세요.

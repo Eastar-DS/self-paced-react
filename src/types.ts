@@ -18,3 +18,9 @@ export interface Restaurant {
   name: string;
   description: string;
 }
+
+export const isRestaurantCategory = (
+  category: string,
+): category is RestaurantCategory => {
+  return (RESTARANT_CATEGORIES as readonly string[]).includes(category);
+};
